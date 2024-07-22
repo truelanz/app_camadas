@@ -2,12 +2,12 @@
 
 namespace DataAccessLayer
 {
-    public class DataAccesslayerConnection
+    public class DataAccessConnection
     {
         private string _stringConnection;
         private MySqlConnection _connection;
 
-        public DataAccesslayerConnection(string connectionData)
+        public DataAccessConnection(string connectionData)
         {
             this._connection = new MySqlConnection();
             this._stringConnection = connectionData;
@@ -31,7 +31,7 @@ namespace DataAccessLayer
             this._connection.Open();
         }
 
-        public void Close()
+        public void Disconnect()
         {
             this._connection.Close();
         }

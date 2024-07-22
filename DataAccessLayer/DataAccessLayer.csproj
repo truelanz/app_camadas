@@ -94,7 +94,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConnectionData.cs" />
-    <Compile Include="DataAccesslayerConnection.cs" />
+    <Compile Include="DataAccessConnection.cs" />
+    <Compile Include="DataAccessUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
