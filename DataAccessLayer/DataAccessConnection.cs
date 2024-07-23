@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 
+//Classe/Camada de ACESSO AOS DADOS, DataAccess.
 namespace DataAccessLayer
 {
     public class DataAccessConnection

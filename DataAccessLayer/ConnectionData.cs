@@ -1,5 +1,6 @@
 ﻿using System;
 
+//Classe/Camada de ACESSO AOS DADOS, DataAccess.
 namespace DataAccessLayer
 {
     public class ConnectionData

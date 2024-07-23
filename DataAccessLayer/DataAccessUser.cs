@@ -2,6 +2,7 @@
 using MySql.Data.MySqlClient;
 using System.Data;
 
+//Classe/Camada de ACESSO AOS DADOS, DataAccess.
 namespace DataAccessLayer
 {
     public class DataAccessUser
@@ -13,7 +14,7 @@ namespace DataAccessLayer
             this.connection = connection;
         }
 
-        public bool addTo(ModelUser modelUser)
+        public bool AddTo(ModelUser modelUser)
         {
             MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = this.connection.ConnectionObj;
@@ -32,7 +33,7 @@ namespace DataAccessLayer
             return true;
         }
 
-        public bool update(ModelUser modelUser)
+        public bool Update(ModelUser modelUser)
         {
             MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = this.connection.ConnectionObj;
@@ -52,7 +53,7 @@ namespace DataAccessLayer
             return true;
         }
 
-        public void delete(int code)
+        public void Delete(int code)
         {
             MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = this.connection.ConnectionObj;
@@ -66,7 +67,7 @@ namespace DataAccessLayer
 
         }
 
-        public DataTable dataList()
+        public DataTable DataList()
         {
             DataTable data = new DataTable();
             MySqlDataAdapter dataAdapter = new MySqlDataAdapter("SELECT * from crud", this.connection.ConnectionString);
