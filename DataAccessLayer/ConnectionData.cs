@@ -9,7 +9,7 @@ namespace DataAccessLayer
         {
             get
             {
-                return "Server = localhost; Database = crud; Uid = truelanz";
+                return "Server = localhost; Database = crud; Uid = truelanz; pwd = 1234";
             }
         }
     }

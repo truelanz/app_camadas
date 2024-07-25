@@ -16,18 +16,21 @@ namespace DataAccessLayer
 
         public bool AddTo(ModelUser modelUser)
         {
-            MySqlCommand cmd = new MySqlCommand();
-            cmd.Connection = this.connection.ConnectionObj;
-
-            cmd.CommandText = "INSERT crud (user_name, age, sex) VALUES(@user_name, @age, @sex)";
+            MySqlCommand cmd = new MySqlCommand
+            {
+                Connection = this.connection.ConnectionObj,
+                CommandText = "INSERT user_table (user_name, age, sex) VALUES(@user_name, @age, @sex)"
+            };
             cmd.Parameters.AddWithValue("@user_name", modelUser.user_name);
             cmd.Parameters.AddWithValue("@age", modelUser.age);
             cmd.Parameters.AddWithValue("@sex", modelUser.sex);
 
             this.connection.Connect();
-            this.connection.Disconnect();
 
             int result = cmd.ExecuteNonQuery();
+
+            this.connection.Disconnect();
+
             if (result <= 0)
                 return false;
             return true;
@@ -38,16 +41,18 @@ namespace DataAccessLayer
             MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = this.connection.ConnectionObj;
 
-            cmd.CommandText = "UPDATE crud SET user_name=@user_name, age=@age, sex=@sex WHERE id_user=@id";
+            cmd.CommandText = "UPDATE user_table SET user_name=@user_name, age=@age, sex=@sex WHERE id_user=@id";
             cmd.Parameters.AddWithValue("@user_name", modelUser.user_name);
             cmd.Parameters.AddWithValue("@age", modelUser.age);
             cmd.Parameters.AddWithValue("@sex", modelUser.sex);
             cmd.Parameters.AddWithValue("@id", modelUser.id);
 
             this.connection.Connect();
-            this.connection.Disconnect();
 
             int result = cmd.ExecuteNonQuery();
+
+            this.connection.Disconnect();
+
             if (result <= 0)
                 return false;
             return true;
@@ -58,19 +63,20 @@ namespace DataAccessLayer
             MySqlCommand cmd = new MySqlCommand();
             cmd.Connection = this.connection.ConnectionObj;
 
-            cmd.CommandText = "DELETE FROM crud WHERE id_user=@id";
+            cmd.CommandText = "DELETE FROM user_table WHERE id_user=@id";
             cmd.Parameters.AddWithValue("@id", code);
 
             this.connection.Connect();
-            cmd.ExecuteNonQuery();
-            this.connection.Disconnect();
 
+            cmd.ExecuteNonQuery();
+
+            this.connection.Disconnect();
         }
 
         public DataTable DataList()
         {
             DataTable data = new DataTable();
-            MySqlDataAdapter dataAdapter = new MySqlDataAdapter("SELECT * from crud", this.connection.ConnectionString);
+            MySqlDataAdapter dataAdapter = new MySqlDataAdapter("SELECT * from user_table", this.connection.ConnectionString);
             dataAdapter.Fill(data);
             return data;
         }
