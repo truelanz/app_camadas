@@ -23,21 +23,29 @@ namespace UserInterface
             InitializeComponent();
         }
 
+        //Fill Grid
         public void FillGrid()
         {
             try
             {
-                DataAccessConnection connection = new DataAccessConnection(ConnectionData.StringConnection); 
+                DataAccessConnection connection = new DataAccessConnection(ConnectionData.StringConnection);
                 BusinessLogicUser businessLogicUser = new BusinessLogicUser(connection);
                 dataUser.DataSource = businessLogicUser.list();
             }
-            catch(Exception err) 
+            catch (Exception err)
             {
                 MessageBox.Show(err.Message);
             }
         }
 
-        //-------------------------------------------------\\
+        public void Clear()
+        {
+            textName.Text = string.Empty;
+            textAge.Text = string.Empty;
+            comboSex.SelectedIndex = 0;
+        }
+
+
         private void Form1_Load(object sender, EventArgs e)
         {
             DataAccessConnection connection = new DataAccessConnection(ConnectionData.StringConnection);
@@ -71,7 +79,7 @@ namespace UserInterface
         {
             int lineNumber = e.RowIndex;
 
-            if(lineNumber >= 0)
+            if (lineNumber >= 0)
             {
                 this.code = Convert.ToInt16(dataUser.Rows[lineNumber].Cells[0].Value);
             }
@@ -96,6 +104,7 @@ namespace UserInterface
                 {
                     MessageBox.Show("Dados inseridos", "info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     FillGrid();
+                    Clear();
                 }
             }
             catch (Exception err)
@@ -119,9 +128,9 @@ namespace UserInterface
         //UPDATE BUTTOM
         private void UPDATE_Click(object sender, EventArgs e)
         {
-           if(this.code <= 0)
+            if (this.code <= 0)
                 MessageBox.Show("Selecione a linha para atualizar", "info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-           else
+            else
             {
                 try
                 {
@@ -141,6 +150,7 @@ namespace UserInterface
                     {
                         MessageBox.Show("Dados atualizados", "info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         FillGrid();
+                        Clear();
                     }
                 }
                 catch (Exception err)
@@ -152,7 +162,32 @@ namespace UserInterface
 
         private void REMOVE_Click(object sender, EventArgs e)
         {
+            if (this.code <= 0)
+                MessageBox.Show("Selecione a linha para remover", "info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            else
+            {
+                try
+                {
+                    DataAccessConnection connection = new DataAccessConnection(ConnectionData.StringConnection);
+                    BusinessLogicUser businessLogicUser = new BusinessLogicUser(connection);
 
+                    var confirm = MessageBox.Show("Está certo disso?", "confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+
+                    if (confirm == DialogResult.Yes)
+                    {
+                        businessLogicUser.Delete(this.code);
+                        MessageBox.Show("Usuário removido", "info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        FillGrid();
+                        Clear();
+                    }
+
+                }
+                catch (Exception err)
+                {
+                    MessageBox.Show("Erro", "info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    FillGrid();
+                }
+            }
         }
     }
 }
